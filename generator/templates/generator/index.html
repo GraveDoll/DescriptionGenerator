@@ -1,0 +1,427 @@
+{% extends "generator/base.html" %} {% load bootstrap4%} {% block title %}商品説明ジェネレーター{% endblock title %} {% block content%}
+
+<div class="jumbotron">
+<h1 class="text-center">商品説明ジェネレーター</h1>
+<p class="text-center">商品の特徴を入力するだけでいい感じの商品説明を生成します。<br>
+  メルカリ・ヤフオクなどで洋服の商品説明の記載に困った際にご活用ください。</p>
+</div>
+
+<div class="container mx-auto" style="width: 200px;">
+  <form id="generator" action="{% url 'generator:index' %}" method="post">
+  {{ form.as_p }}
+  {% csrf_token %}
+  <br>
+    <button type="submit" name="btn_generate" class="btn btn-primary" style="width: 200px">商品説明作成！</button>
+</div>
+</form>
+</div>
+<br>
+<div class="form-group mx-auto" style="width: 600px;">
+  <label for="descriptionTextarea">商品説明</label>
+  <textarea class="form-control" id="descriptionTextarea" rows="5"></textarea>
+</div>
+</form>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div class="social mx-auto" style="width: 400px;">
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="fb-like" data-href="https://description-generator.herokuapp.com/generator/index" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+
+
+{% endblock content %}
+{% block extra_js %}
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+  
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+
+$(function () {
+  init();
+  
+    $('#id_gender').change(function() {
+    // 子カテゴリの選択欄を空にする。
+    var categoryElement = $('#id_m_category');
+    var subCategoryElement = $('#id_s_category');
+    var silhouetteElement = $('#id_silhouette');
+    var designElement = $('#id_design');
+    var collerElement = $('#id_coller');
+    var zipButtonElement = $('#id_zip_button');
+    var lengthElement = $('#id_length');
+    var legElement = $('#id_leg');
+    var effectElement = $('#id_effect');
+    categoryElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    subCategoryElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    silhouetteElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    designElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    collerElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    lengthElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    zipButtonElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    legElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    effectElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    var pk = $(this).val();
+
+    $.ajax({
+      url: 'ajax/category/',
+      type: 'POST',
+      data:{
+        'pk':pk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['main_category']);
+            categoryElement.append(option);
+        }
+    });
+  });
+
+  $('#id_m_category').change(function() {
+    // 子カテゴリの選択欄を空にする。
+    var subCategoryElement = $('#id_s_category');
+    var silhouetteElement = $('#id_silhouette');
+    var designElement = $('#id_design');
+    var neckElement = $('#id_neck');
+    var collerElement = $('#id_coller');
+    var zipButtonElement = $('#id_zip_button');
+    var lengthElement = $('#id_length');
+    var legElement = $('#id_leg');
+    var effectElement = $('#id_effect');
+    subCategoryElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    silhouetteElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    designElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    neckElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    collerElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    lengthElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    zipButtonElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    legElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+  　effectElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    var pk = $(this).val();
+
+    $.ajax({
+      url: 'ajax/sub_category/',
+      type: 'POST',
+      data:{
+        'pk':pk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['sub_category']);
+            subCategoryElement.append(option);
+        }
+    });
+
+  });
+
+    $('#id_s_category').change(function() {
+    // 子カテゴリの選択欄を空にする。
+    var silhouetteElement = $('#id_silhouette');
+    var designElement = $('#id_design');
+    var neckElement = $('#id_neck');
+    var collerElement = $('#id_coller');
+    var zipButtonElement = $('#id_zip_button');
+    var lengthElement = $('#id_length');
+    var legElement = $('#id_leg');
+    var effectElement = $('#id_effect');
+    silhouetteElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    designElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    neckElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    collerElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    zipButtonElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    lengthElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    legElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    effectElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    var mainCategoryPk = $('#id_m_category').val();
+    var subCategoryPk = $('#id_s_category').val();
+    $.ajax({
+      url: 'ajax/silhouette/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+      if(subCategoryPk!=""){
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['silhouette']);
+            silhouetteElement.append(option);
+        }
+      }
+    });
+    $.ajax({
+      url: 'ajax/design/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['design']);
+            designElement.append(option);
+        }
+    });
+    $.ajax({
+      url: 'ajax/neck/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['neck']);
+            neckElement.append(option);
+        }
+    });
+    $.ajax({
+      url: 'ajax/coller/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['coller']);
+            collerElement.append(option);
+        }
+    });    
+    $.ajax({
+      url: 'ajax/zip_button/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['zip_button']);
+            zipButtonElement.append(option);
+        }
+    });   
+    $.ajax({
+      url: 'ajax/length/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['length']);
+            lengthElement.append(option);
+        }
+    });
+    $.ajax({
+      url: 'ajax/leg/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['leg']);
+            legElement.append(option);
+        }
+    });  
+    $.ajax({
+      url: 'ajax/effect/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':mainCategoryPk,
+        'subCategoryPk':subCategoryPk,
+        }
+    }).done(function(categoryList){
+        // 子カテゴリの選択肢を作成・追加。
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category['effect']);
+            effectElement.append(option);
+        }
+    }); 
+
+  });
+
+
+    function init() {
+      var categoryElement = $('#id_m_category');
+    var subCategoryElement = $('#id_s_category');
+    var silhouetteElement = $('#id_silhouette');
+    var designElement = $('#id_design');
+    var collerElement = $('#id_coller');
+    var zipButtonElement = $('#id_zip_button');
+    var lengthElement = $('#id_length');
+    var legElement = $('#id_leg');
+    var effectElement = $('#id_effect');
+    categoryElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    subCategoryElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    silhouetteElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    designElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    collerElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    lengthElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    zipButtonElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    legElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+    effectElement.children().each(function () {
+      $(this).not(':first-child').remove();
+    });
+
+    }
+  });
+
+  $('#generator').submit(function () {
+    $.ajax({
+      'url': '',
+      'type': 'POST',
+      'data': {
+        'main_category': $('#id_m_category').val(),
+        'sub_category': $('#id_s_category').val(),
+        'silhouette': $('#id_silhouette').val(),
+        'design': $('#id_design').val(),
+        'neck': $('#id_neck').val(),
+        'coller': $('#id_coller').val(),
+        'zipbutton': $('#id_zip_button').val(),
+        'length': $('#id_length').val(),
+        'leg': $('#id_leg').val(),
+        'effect': $('#id_effect').val(),
+      },
+      'success': function (response) {
+        $('#descriptionTextarea').val(response)
+      },
+    });
+    return false;
+  });
+</script>
+{% endblock extra_js %}
