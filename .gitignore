@@ -105,9 +105,6 @@ venv.bak/
 
 local_settings.py
 
-# files to ignore
-settings.py
-
 # extensions to ignore
 *.log
 *.pot
