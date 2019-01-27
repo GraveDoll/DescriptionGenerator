@@ -5,7 +5,7 @@ from generator import views
 app_name = 'generator'
 # ルーティングの設定
 urlpatterns = [path('', views.index, name='index'),
-path('ajax/category/', views.get_category, name='get_category'),
+path('ajax/main_category/', views.get_category, name='get_main_category'),
 path('ajax/sub_category/', views.get_sub_category, name='get_sub_category'),
 path('ajax/silhouette/', views.get_silhouette, name='get_silhouette'),
 path('ajax/design/', views.get_design, name='get_design'),

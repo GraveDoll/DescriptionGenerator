@@ -73,50 +73,25 @@ function getCookie(name) {
   });
 
 $(function () {
-  init();
+  var elements = { main_category:$('#id_m_category'), sub_category:$('#id_s_category'), silhouette:$('#id_silhouette'),
+  design:$('#id_design'), neck:$('#id_neck'), coller:$('#id_coller'), zip_button:$('#id_zip_button'),length:$('#id_length'),
+  leg:$('#id_leg'), effect:$('#id_effect') };
   
-    $('#id_gender').change(function() {
-    // 子カテゴリの選択欄を空にする。
-    var categoryElement = $('#id_m_category');
-    var subCategoryElement = $('#id_s_category');
-    var silhouetteElement = $('#id_silhouette');
-    var designElement = $('#id_design');
-    var collerElement = $('#id_coller');
-    var zipButtonElement = $('#id_zip_button');
-    var lengthElement = $('#id_length');
-    var legElement = $('#id_leg');
-    var effectElement = $('#id_effect');
-    categoryElement.children().each(function () {
+  init(elements);
+  $('#id_gender').change(function() {    
+    elements['main_category'].parent().show(); 
+    for(var name in elements){
+      elements[name].parent().hide(); 
+      elements[name].children().each(function () {
+      // 子カテゴリの選択欄を空にする。
       $(this).not(':first-child').remove();
     });
-    subCategoryElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    silhouetteElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    designElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    collerElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    lengthElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    zipButtonElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    legElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    effectElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
+    }
+
     var pk = $(this).val();
 
     $.ajax({
-      url: 'ajax/category/',
+      url: 'ajax/main_category/',
       type: 'POST',
       data:{
         'pk':pk,
@@ -127,279 +102,69 @@ $(function () {
             var option = $('<option>');
             option.val(category['pk']);
             option.text(category['main_category']);
-            categoryElement.append(option);
+            elements['main_category'].append(option);
+            elements['main_category'].parent().show();
         }
     });
   });
 
   $('#id_m_category').change(function() {
-    // 子カテゴリの選択欄を空にする。
-    var subCategoryElement = $('#id_s_category');
-    var silhouetteElement = $('#id_silhouette');
-    var designElement = $('#id_design');
-    var neckElement = $('#id_neck');
-    var collerElement = $('#id_coller');
-    var zipButtonElement = $('#id_zip_button');
-    var lengthElement = $('#id_length');
-    var legElement = $('#id_leg');
-    var effectElement = $('#id_effect');
-    subCategoryElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    silhouetteElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    designElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    neckElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    collerElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    lengthElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    zipButtonElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    legElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-  　effectElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    var pk = $(this).val();
-
-    $.ajax({
-      url: 'ajax/sub_category/',
-      type: 'POST',
-      data:{
-        'pk':pk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['sub_category']);
-            subCategoryElement.append(option);
-        }
-    });
-
-  });
-
-    $('#id_s_category').change(function() {
-    // 子カテゴリの選択欄を空にする。
-    var silhouetteElement = $('#id_silhouette');
-    var designElement = $('#id_design');
-    var neckElement = $('#id_neck');
-    var collerElement = $('#id_coller');
-    var zipButtonElement = $('#id_zip_button');
-    var lengthElement = $('#id_length');
-    var legElement = $('#id_leg');
-    var effectElement = $('#id_effect');
-    silhouetteElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    designElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    neckElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    collerElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    zipButtonElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    lengthElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    legElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    effectElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    var mainCategoryPk = $('#id_m_category').val();
-    var subCategoryPk = $('#id_s_category').val();
-    $.ajax({
-      url: 'ajax/silhouette/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-      if(subCategoryPk!=""){
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['silhouette']);
-            silhouetteElement.append(option);
-        }
+    for(var name in elements){
+      if(name != 'main_category'){
+        elements[name].parent().hide(); 
+        elements[name].children().each(function () {
+          $(this).not(':first-child').remove();
+          });
+        ajax(name, elements);
       }
-    });
-    $.ajax({
-      url: 'ajax/design/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['design']);
-            designElement.append(option);
-        }
-    });
-    $.ajax({
-      url: 'ajax/neck/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['neck']);
-            neckElement.append(option);
-        }
-    });
-    $.ajax({
-      url: 'ajax/coller/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['coller']);
-            collerElement.append(option);
-        }
-    });    
-    $.ajax({
-      url: 'ajax/zip_button/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['zip_button']);
-            zipButtonElement.append(option);
-        }
-    });   
-    $.ajax({
-      url: 'ajax/length/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['length']);
-            lengthElement.append(option);
-        }
-    });
-    $.ajax({
-      url: 'ajax/leg/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['leg']);
-            legElement.append(option);
-        }
-    });  
-    $.ajax({
-      url: 'ajax/effect/',
-      type: 'POST',
-      data:{
-        'mainCategoryPk':mainCategoryPk,
-        'subCategoryPk':subCategoryPk,
-        }
-    }).done(function(categoryList){
-        // 子カテゴリの選択肢を作成・追加。
-        for(var category of categoryList) {
-            var option = $('<option>');
-            option.val(category['pk']);
-            option.text(category['effect']);
-            effectElement.append(option);
-        }
-    }); 
-
+    }
+    elements['sub_category'].parent().show(); 
+    var pk = $(this).val();
   });
-
-
-    function init() {
-      var categoryElement = $('#id_m_category');
-    var subCategoryElement = $('#id_s_category');
-    var silhouetteElement = $('#id_silhouette');
-    var designElement = $('#id_design');
-    var collerElement = $('#id_coller');
-    var zipButtonElement = $('#id_zip_button');
-    var lengthElement = $('#id_length');
-    var legElement = $('#id_leg');
-    var effectElement = $('#id_effect');
-    categoryElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    subCategoryElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    silhouetteElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    designElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    collerElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    lengthElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    zipButtonElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    legElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-    effectElement.children().each(function () {
-      $(this).not(':first-child').remove();
-    });
-
+  
+  $('#id_s_category').change(function() {
+    for(var name in elements){
+      if(name != 'main_category' && name != 'sub_category'){
+        elements[name].parent().hide(); 
+        elements[name].children().each(function () {
+          $(this).not(':first-child').remove();
+          });
+        ajax(name, elements);
+      }
     }
   });
+  
+  //初期化処理
+  function init(elements) {
+    for(var name in elements){
+      elements[name].children().each(function () {
+        $(this).not(':first-child').remove();
+      });
+      elements[name].parent().hide(); 
+    }
+  }
+  
+  //ajax処理
+  function ajax(name, elements) {
+    $.ajax({
+      url: 'ajax/'+name+'/',
+      type: 'POST',
+      data:{
+        'mainCategoryPk':$('#id_m_category').val(),
+        'subCategoryPk':$('#id_s_category').val(),
+        }
+    }).done(function(categoryList){
+        for(var category of categoryList) {
+            var option = $('<option>');
+            option.val(category['pk']);
+            option.text(category[name]);
+            elements[name].append(option);
+            elements[name].parent().show();
+        }
+    }); 
+  }
+});
+
 
   $('#generator').submit(function () {
     $.ajax({

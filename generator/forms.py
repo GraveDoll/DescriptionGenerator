@@ -45,8 +45,14 @@ class PostCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+
         for field in self.fields.values():
             field.required = False
             field.widget.attrs['style'] = 'width:200px;'
+            if field == 'm_category':
+                field.widget = forms.HiddenInput()
+
 
     field_order = ('gender', 'm_category', 's_category', 'silhouette', 'design', 'neck', 'coller', 'zip_button', 'length', 'leg', 'effect')

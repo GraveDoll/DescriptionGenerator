@@ -80,15 +80,17 @@ def get_category(request):
     else:
         category_list = MainCategory.objects.filter(parent__pk=pk)
     category_list = [{'pk':category.pk, 'main_category':category.main_category} for category in category_list]
+
     # JSONで返す。値が辞書じゃない場合は、safe=Falseが必要。今回はリストなのでsafe=Falseに。
     return JsonResponse(category_list, safe=False)
 
 def get_sub_category(request):
-    pk = request.POST.get('pk')
-    if not pk:
+    mainCategoryPk = request.POST.get('mainCategoryPk')
+    subCategoryPk = request.POST.get('subCategoryPk')
+    if not mainCategoryPk:
         category_list = []
     else:
-        category_list = SubCategory.objects.filter(parent__pk=pk)
+        category_list = SubCategory.objects.filter(parent__pk=mainCategoryPk)
     category_list = [{'pk': category.pk, 'sub_category': category.sub_category} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
