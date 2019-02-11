@@ -10,7 +10,7 @@ class Gender(models.Model):
     # name = models.CharField('性別', max_length=255)
     gender = models.CharField(
         max_length=255,
-        choices=GENDER_CHOICES
+        choices=sorted(GENDER_CHOICES, key=lambda x: x[0])
     )
     def __str__(self):
         return self.gender
@@ -51,7 +51,7 @@ class SubCategory(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     sub_category = models.CharField(
         max_length=255,
-        choices=SUB_CATEGORY_CHOICES
+        choices=sorted(SUB_CATEGORY_CHOICES, key=lambda x: x[0])
     )
     parent = models.ForeignKey(MainCategory, verbose_name='メインカテゴリ', on_delete=models.PROTECT)
     def __str__(self):
@@ -75,7 +75,7 @@ class SILHOUETTE(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     silhouette = models.CharField(
         max_length=255,
-        choices=SILHOUETTE_CHOICES
+        choices=sorted(SILHOUETTE_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -96,7 +96,7 @@ class DESIGN(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     design = models.CharField(
         max_length=255,
-        choices=DESIGN_CHOICES
+        choices=sorted(DESIGN_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -116,7 +116,7 @@ class NECK(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     neck = models.CharField(
         max_length=255,
-        choices=NECK_CHOICES,
+        choices=sorted(NECK_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -136,7 +136,7 @@ class COLLER(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     coller = models.CharField(
         max_length=255,
-        choices=COLLER_CHOICES,
+        choices=sorted(COLLER_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -153,7 +153,7 @@ class ZipButton(models.Model):
     )
     zip_button = models.CharField(
         max_length=255,
-        choices=ZipButton_CHOICES,
+        choices=sorted(ZipButton_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -176,7 +176,7 @@ class Length(models.Model):
     )
     length = models.CharField(
         max_length=255,
-        choices=LENGTH_CHOICES,
+        choices=sorted(LENGTH_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -193,7 +193,7 @@ class Leg(models.Model):
     )
     leg = models.CharField(
         max_length=255,
-        choices=LEG_CHOICES,
+        choices=sorted(LEG_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
@@ -211,7 +211,7 @@ class Effect(models.Model):
     )
     effect = models.CharField(
         max_length=255,
-        choices=EFFECT_CHOICES,
+        choices=sorted(EFFECT_CHOICES, key=lambda x: x[0])
     )
     description = models.CharField(
         max_length=255,
