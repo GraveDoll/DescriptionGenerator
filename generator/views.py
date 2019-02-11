@@ -78,7 +78,7 @@ def get_category(request):
         category_list = []
     # pkがあれば、そのpkでカテゴリを絞り込む
     else:
-        category_list = MainCategory.objects.filter(parent__pk=pk)
+        category_list = MainCategory.objects.filter(parent__pk=pk).order_by('main_category')
     category_list = [{'pk':category.pk, 'main_category':category.main_category} for category in category_list]
 
     # JSONで返す。値が辞書じゃない場合は、safe=Falseが必要。今回はリストなのでsafe=Falseに。
