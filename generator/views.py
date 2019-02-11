@@ -90,7 +90,7 @@ def get_sub_category(request):
     if not mainCategoryPk:
         category_list = []
     else:
-        category_list = SubCategory.objects.filter(parent__pk=mainCategoryPk)
+        category_list = SubCategory.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'sub_category': category.sub_category} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -100,7 +100,7 @@ def get_silhouette(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = SILHOUETTE.objects.filter(parent__pk=mainCategoryPk)
+        category_list = SILHOUETTE.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'silhouette': category.silhouette} for category in category_list]
 
     return JsonResponse(category_list, safe=False)
@@ -111,7 +111,7 @@ def get_design(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = DESIGN.objects.filter(parent__pk=mainCategoryPk)
+        category_list = DESIGN.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'design': category.design} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -121,7 +121,7 @@ def get_neck(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = NECK.objects.filter(parent__pk=subCategoryPk)
+        category_list = NECK.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'neck': category.neck} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -131,7 +131,7 @@ def get_coller(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = COLLER.objects.filter(parent__pk=subCategoryPk)
+        category_list = COLLER.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'coller': category.coller} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -141,7 +141,7 @@ def get_zip_button(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = ZipButton.objects.filter(parent__pk=subCategoryPk)
+        category_list = ZipButton.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'zip_button': category.zip_button} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -151,7 +151,7 @@ def get_length(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = Length.objects.filter(parent__pk=mainCategoryPk)
+        category_list = Length.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'length': category.length} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -161,7 +161,7 @@ def get_leg(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = Leg.objects.filter(parent__pk=mainCategoryPk)
+        category_list = Leg.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'leg': category.leg} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -171,6 +171,6 @@ def get_effect(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = Effect.objects.filter(parent__pk=subCategoryPk)
+        category_list = Effect.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'effect': category.effect} for category in category_list]
     return JsonResponse(category_list, safe=False)
