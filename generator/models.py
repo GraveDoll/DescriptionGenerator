@@ -10,7 +10,7 @@ class Gender(models.Model):
     # name = models.CharField('性別', max_length=255)
     gender = models.CharField(
         max_length=255,
-        choices=sorted(GENDER_CHOICES, key=lambda x: x[0])
+        choices=(GENDER_CHOICES)
     )
     def __str__(self):
         return self.gender
@@ -25,7 +25,7 @@ class MainCategory(models.Model):
     )
     main_category = models.CharField(
         max_length=255,
-        choices=sorted(MAIN_CATEGORY_CHOICES, key=lambda x: x[0])
+        choices=(MAIN_CATEGORY_CHOICES)
     )
     parent = models.ForeignKey(Gender, verbose_name='性別', on_delete=models.PROTECT)
     def __str__(self):
@@ -51,7 +51,7 @@ class SubCategory(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     sub_category = models.CharField(
         max_length=255,
-        choices=sorted(SUB_CATEGORY_CHOICES, key=lambda x: x[0])
+        choices=(SUB_CATEGORY_CHOICES)
     )
     parent = models.ForeignKey(MainCategory, verbose_name='メインカテゴリ', on_delete=models.PROTECT)
     def __str__(self):
@@ -75,7 +75,7 @@ class SILHOUETTE(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     silhouette = models.CharField(
         max_length=255,
-        choices=sorted(SILHOUETTE_CHOICES, key=lambda x: x[0])
+        choices=(SILHOUETTE_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -96,7 +96,7 @@ class DESIGN(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     design = models.CharField(
         max_length=255,
-        choices=sorted(DESIGN_CHOICES, key=lambda x: x[0])
+        choices=(DESIGN_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -116,7 +116,7 @@ class NECK(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     neck = models.CharField(
         max_length=255,
-        choices=sorted(NECK_CHOICES, key=lambda x: x[0])
+        choices=(NECK_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -136,7 +136,7 @@ class COLLER(models.Model):
     # name = models.CharField('メインカテゴリ名', max_length=255)
     coller = models.CharField(
         max_length=255,
-        choices=sorted(COLLER_CHOICES, key=lambda x: x[0])
+        choices=(COLLER_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -153,7 +153,7 @@ class ZipButton(models.Model):
     )
     zip_button = models.CharField(
         max_length=255,
-        choices=sorted(ZipButton_CHOICES, key=lambda x: x[0])
+        choices=(ZipButton_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -176,7 +176,7 @@ class Length(models.Model):
     )
     length = models.CharField(
         max_length=255,
-        choices=sorted(LENGTH_CHOICES, key=lambda x: x[0])
+        choices=(LENGTH_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -193,7 +193,7 @@ class Leg(models.Model):
     )
     leg = models.CharField(
         max_length=255,
-        choices=sorted(LEG_CHOICES, key=lambda x: x[0])
+        choices=(LEG_CHOICES)
     )
     description = models.CharField(
         max_length=255,
@@ -211,7 +211,7 @@ class Effect(models.Model):
     )
     effect = models.CharField(
         max_length=255,
-        choices=sorted(EFFECT_CHOICES, key=lambda x: x[0])
+        choices=(EFFECT_CHOICES)
     )
     description = models.CharField(
         max_length=255,
