@@ -25,7 +25,7 @@ class MainCategory(models.Model):
     )
     main_category = models.CharField(
         max_length=255,
-        choices=MAIN_CATEGORY_CHOICES
+        choices=sorted(MAIN_CATEGORY_CHOICES, key=lambda x: x[0])
     )
     parent = models.ForeignKey(Gender, verbose_name='性別', on_delete=models.PROTECT)
     def __str__(self):
