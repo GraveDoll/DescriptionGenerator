@@ -1,5 +1,5 @@
 # DescriptionGenerator
-フリマアプリのための商品（洋服）説明ジェネレーター
+- フリマアプリのための商品（洋服）説明ジェネレーター
 https://descriptiongenerator.herokuapp.com/
 
 # Description
