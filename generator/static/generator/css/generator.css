@@ -4,12 +4,16 @@
     margin: 0 auto;
 } */
 
-textarea {
+/*.generator {
     width: 300px;
-    height: 80px;
     text-align: center;
-}
+}*/
+
+/* textarea {
+    width: 300px;
+    height: 300px;
+} */
 
 /* snsシェアボタン */
-.social > * { vertical-align: bottom; margin: 7px; }
+.social {vertical-align: bottom; margin: 7px;}
 

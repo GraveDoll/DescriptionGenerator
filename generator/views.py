@@ -4,7 +4,7 @@ from django.template.response import TemplateResponse
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from generator.models import Gender, MainCategory, SubCategory, SILHOUETTE, DESIGN, NECK, COLLER, ZipButton, Length, Leg, Effect
+from generator.models import Gender, MainCategory, SubCategory, Silhouette, Design, Neck, Coller, ZipButton, Length, Leg, Effect
 from generator.forms import PostCreateForm
 from generator.consts import *
 import json
@@ -30,19 +30,19 @@ def index(request):
             result_res_effect = request.POST['effect']
             
             if result_res_silhouette:
-                silhouette = SILHOUETTE.objects.filter(pk=result_res_silhouette).first()
+                silhouette = Silhouette.objects.filter(pk=result_res_silhouette).first()
                 response += silhouette.description
 
             if result_res_design:
-                design = DESIGN.objects.filter(pk=result_res_design).first()
+                design = Design.objects.filter(pk=result_res_design).first()
                 response += design.description
                 
             if result_res_neck:
-                neck = NECK.objects.filter(pk=result_res_neck).first()
+                neck = Neck.objects.filter(pk=result_res_neck).first()
                 response += neck.description
 
             if result_res_coller:
-                coller = COLLER.objects.filter(pk=result_res_coller).first()
+                coller = Coller.objects.filter(pk=result_res_coller).first()
                 response += coller.description
 
             if result_res_zipbutton:
@@ -100,7 +100,7 @@ def get_silhouette(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = SILHOUETTE.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
+        category_list = Silhouette.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'silhouette': category.silhouette} for category in category_list]
 
     return JsonResponse(category_list, safe=False)
@@ -111,7 +111,7 @@ def get_design(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = DESIGN.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
+        category_list = Design.objects.filter(parent__pk=mainCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'design': category.design} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -121,7 +121,7 @@ def get_neck(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = NECK.objects.filter(parent__pk=subCategoryPk).order_by('pk')
+        category_list = Neck.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'neck': category.neck} for category in category_list]
     return JsonResponse(category_list, safe=False)
 
@@ -131,7 +131,7 @@ def get_coller(request):
     if not mainCategoryPk or not subCategoryPk:
         category_list = []
     else:
-        category_list = COLLER.objects.filter(parent__pk=subCategoryPk).order_by('pk')
+        category_list = Coller.objects.filter(parent__pk=subCategoryPk).order_by('pk')
     category_list = [{'pk': category.pk, 'coller': category.coller} for category in category_list]
     return JsonResponse(category_list, safe=False)
 

@@ -57,7 +57,7 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.sub_category
 
-class SILHOUETTE(models.Model):
+class Silhouette(models.Model):
     SILHOUETTE_CHOICES = (
         ("細身", '細身'),
         ("普通", '普通'),
@@ -85,7 +85,7 @@ class SILHOUETTE(models.Model):
     def __str__(self):
         return self.silhouette
 
-class DESIGN(models.Model):
+class Design(models.Model):
     DESIGN_CHOICES = (
         ("無地", '無地'),
         ("ボーダー", 'ボーダー'),
@@ -106,7 +106,7 @@ class DESIGN(models.Model):
     def __str__(self):
         return self.design
 
-class NECK(models.Model):
+class Neck(models.Model):
     NECK_CHOICES = (
         ("クルーネック", 'クルーネック'),
         ("Uネック", 'Uネック'),
@@ -126,7 +126,7 @@ class NECK(models.Model):
     def __str__(self):
         return self.neck
 
-class COLLER(models.Model):
+class Coller(models.Model):
     COLLER_CHOICES = (
         ("レギュラー", 'レギュラー'),
         ("ボタンダウン", 'ボタンダウン'),
@@ -224,10 +224,10 @@ class Effect(models.Model):
 class Post(models.Model):
     m_category = models.ForeignKey(MainCategory, verbose_name='メインカテゴリ', on_delete=models.PROTECT)
     s_category = models.ForeignKey(SubCategory, verbose_name='サブカテゴリ', on_delete=models.PROTECT)
-    silhouette = models.ForeignKey(SILHOUETTE, verbose_name='シルエット', on_delete=models.PROTECT)
-    design = models.ForeignKey(DESIGN, verbose_name='デザイン', on_delete=models.PROTECT)
-    neck = models.ForeignKey(NECK, verbose_name='ネック', on_delete=models.PROTECT)
-    coller = models.ForeignKey(COLLER, verbose_name='襟', on_delete=models.PROTECT)
+    silhouette = models.ForeignKey(Silhouette, verbose_name='シルエット', on_delete=models.PROTECT)
+    design = models.ForeignKey(Design, verbose_name='デザイン', on_delete=models.PROTECT)
+    neck = models.ForeignKey(Neck, verbose_name='ネック', on_delete=models.PROTECT)
+    coller = models.ForeignKey(Coller, verbose_name='襟', on_delete=models.PROTECT)
     zip_button = models.ForeignKey(ZipButton, verbose_name='ジップ・ボタン', on_delete=models.PROTECT)
     length = models.ForeignKey(Length, verbose_name='丈', on_delete=models.PROTECT,)
     leg = models.ForeignKey(Leg, verbose_name='膝下', on_delete=models.PROTECT)
