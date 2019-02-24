@@ -15,5 +15,5 @@
 } */
 
 /* snsシェアボタン */
-.social {vertical-align: bottom; margin: 7px;}
+.social > * { vertical-align: bottom; margin: 7px; }
 
